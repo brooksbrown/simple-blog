@@ -1,1 +1,5 @@
-# Puppet will install and/or update pip packages listed here
+flask
+sqlalchemy==0.7.9
+flask-sqlalchemy
+flask-script
+flask-assets
