@@ -1,0 +1,7 @@
+{{ form.csrf_token }}
+<form method="post" action="/blog/new">
+	{{ form.title }}
+	{{ form.body }}
+	{{ form.hidden_tag() }}
+	<input type="submit" value="submit">
+</form>

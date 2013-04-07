@@ -32,6 +32,7 @@ class Config(object):
     DEV_SERVER_PORT = 8000
     BLUEPRINTS = [
         #'blog.views.app' # or ('blog.views.app', {'url_prefix':'/blog'})
+        'simpleblog.views.app',
     ]  # each as (blueprint_instance, url_preffix)
 
 
@@ -46,3 +47,4 @@ class Testing(Config):
     CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/%s_test.sqlite" % project_name
     SQLALCHEMY_ECHO = False
+

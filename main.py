@@ -1,7 +1,5 @@
 from flask import Flask, render_template
 
-from flask.ext.admin import Admin
-from flask.ext.admin.contrib.sqlamodel import ModelView
 from flask.ext.assets import Environment
 
 
