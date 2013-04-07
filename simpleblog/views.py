@@ -10,7 +10,7 @@ app = Blueprint('simpleblog',
 				template_folder='templates', 
 				url_prefix='/blog')
 
-@app.route('/new')
+@app.route('/textblog/new')
 def new_blog():
 	form = NewTextBlogForm()
-	return render_template('simpleblog/new.html', form=form)	
+	return render_template('simpleblog/text-new.html', form=form)	
