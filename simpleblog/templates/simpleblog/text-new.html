@@ -1,7 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
 {{ form.csrf_token }}
 <form method="post" action="/blog/new">
-	{{ form.title }}
-	{{ form.body }}
+	{{ form.title(placeholder="title")}}
+	{{ form.tag1(value="python,flask,programming")}}
+	{{ form.body(placeholder="Start typing...") }}
 	{{ form.hidden_tag() }}
 	<input type="submit" value="submit">
 </form>
+{% endblock %}
