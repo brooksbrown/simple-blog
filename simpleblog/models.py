@@ -2,7 +2,7 @@ from database import db
 
 blog_tags = db.Table('blog_tags',
 		db.Column('blog_tag_id', db.Integer, db.ForeignKey('blog_tag.id')),
-		db.Column('blog_entry_id', db.Integer, db.FOreignKey('blog_entry.id'))
+		db.Column('blog_entry_id', db.Integer, db.ForeignKey('blog_entry.id'))
 		)
 
 class BlogTag(db.Model):
