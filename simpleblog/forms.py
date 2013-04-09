@@ -4,7 +4,7 @@ class NewTextBlogForm(Form):
 	title = TextField('Title', [
 		validators.Required()
 	])
-	tag1 = TextField('tag1')
+	tags = TextField('tags')
 	body = TextAreaField('Body')
 
 class NewPhotoBlogForm(Form):
