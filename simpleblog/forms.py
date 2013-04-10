@@ -23,14 +23,6 @@ class NewQuoteBlogForm(Form):
 	body 	= TextAreaField('body')
 	source 	= TextField('source')
 
-class NewLinkBlogForm(Form):
-	title 	= TextField('Title', [
-		validators.Required()
-	])
-	tags 	= TextField('tags')
-	link 	= TextField('link')
-	body 	= TextAreaField('body')
-
 class NewVideoBlogForm(Form):
 	title 	= TextField('Title', [
 		validators.Required()
@@ -40,6 +32,14 @@ class NewVideoBlogForm(Form):
 	body 	= TextAreaField('body')
 
 class NewAudioBlogForm(Form):
+	title 	= TextField('Title', [
+		validators.Required()
+	])
+	tags 	= TextField('tags')
+	link 	= TextField('link')
+	body 	= TextAreaField('body')
+
+class NewLinkBlogForm(Form):
 	title 	= TextField('Title', [
 		validators.Required()
 	])

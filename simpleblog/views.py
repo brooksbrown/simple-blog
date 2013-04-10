@@ -26,6 +26,19 @@ def new_quote_blog():
 	form = NewQuoteBlogForm()
 	return render_template('simpleblog/quote-new.html', form=form)
 
+@app.route('/video/new')
+def new_video_blog():
+	form = NewQuoteVideoForm()
+	return render_template('simpleblog/quote-new.html', form=form)
 
+@app.route('/audio/new')
+def new_audio_blog():
+	form = NewQuoteAudioForm()
+	return render_template('simpleblog/quote-new.html', form=form)
+
+@app.route('/link/new')
+def new_link_blog():
+	form = NewQuoteLinkForm()
+	return render_template('simpleblog/quote-new.html', form=form)
 
 
