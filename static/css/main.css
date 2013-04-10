@@ -7,8 +7,9 @@ body {
 }
 
 header {
-	margin: 0;
 	background-color: #333;
+	color: #f9f9f9;
+	margin: 0 0 40px 0;
 	width: 100%;
 }
 
@@ -18,10 +19,29 @@ header h1 {
 	color: #f9f9f9;
 	font-size: 16px;
 	font-weight: 300;
-	text-align: center;
+	float: left;
 }  
 
-div.content {
+header a.user {
+	float: right;
+	margin: 0;
+	padding: 10px;
+	position: relative;
+}
+
+header a.user:after {
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	content: "";
+	border-top: 5px solid #f9f9f9;
+	position: absolute;
+	top: 20px;
+	right: -5px;
+}
+
+div.container {
 	margin: 0 auto;
 	width: 60%;
 }
@@ -35,7 +55,21 @@ input, textarea {
 	background-color: #f7f7f7;
 	display: block;
 	width: 100%;
-	font-size: 42px;
+	font-family: 'open sans';
+}
+
+input#title {
+	font-size: 50px;
+}
+
+input#tags_tag {
+	padding-left: 0;
+}
+
+textarea#body, textarea#body::-webkit-input-placeholder {
+	font-size: 18px;
+	font-weight: 300;
+	height: 600px;
 }
 
 input#link, input#link::-webkit-input-placeholder { 
@@ -44,7 +78,7 @@ input#link, input#link::-webkit-input-placeholder {
 }
 
 ::-webkit-input-placeholder {
-	font-size: 42px;
+	font-size: 50px;
 	color: #333;
 	font-family: 'open sans';
 	font-weight: 300;
@@ -86,4 +120,28 @@ div.tagsinput div { display:block; float: left; }
 .tags_clear { clear: both; width: 100%; height: 0px; }
 
 .not_valid {background: #FBD8DB !important; color: #90111A !important;}
+
+
+
+
+
+
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
 
