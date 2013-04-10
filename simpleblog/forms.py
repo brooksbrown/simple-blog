@@ -1,26 +1,48 @@
 from flask.ext.wtf import Form, TextField, TextAreaField, validators, html5, FileField
 
 class NewTextBlogForm(Form):
-	title = TextField('Title', [
+	title 	= TextField('Title', [
 		validators.Required()
 	])
-	tag1 = TextField('tag1')
-	body = TextAreaField('Body')
+	tags 	= TextField('tags')
+	body 	= TextAreaField('Body')
 
 class NewPhotoBlogForm(Form):
-	title = TextField('Title', [
+	title 		= TextField('Title', [
 		validators.Required()
-	])
-
-	photo_link = html5.URLField('link')
-
-	photo_file = FileField('file')
+	])	
+	tags 		= TextField('tags')	
+	photo_link  = html5.URLField('link')
+	photo_file 	= FileField('file')
 
 class NewQuoteBlogForm(Form):
-	title = TextField('Title', [
+	title 	= TextField('Title', [
 		validators.Required()
 	])
+	tags 	= TextField('tags')
+	body 	= TextAreaField('body')
+	source 	= TextField('source')
 
-	body = TextAreaField('Body')
-	source = TextField('Source')
+class NewVideoBlogForm(Form):
+	title 	= TextField('Title', [
+		validators.Required()
+	])
+	tags 	= TextField('tags')
+	link 	= TextField('link')
+	body 	= TextAreaField('body')
 
+class NewAudioBlogForm(Form):
+	title 	= TextField('Title', [
+		validators.Required()
+	])
+	tags 	= TextField('tags')
+	link 	= TextField('link')
+	body 	= TextAreaField('body')
+
+class NewLinkBlogForm(Form):
+	title 	= TextField('Title', [
+		validators.Required()
+	])
+	tags 	= TextField('tags')
+	link 	= TextField('link')
+	body 	= TextAreaField('body')
