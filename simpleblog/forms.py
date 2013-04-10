@@ -10,17 +10,14 @@ class NewTextBlogForm(Form):
 class NewPhotoBlogForm(Form):
 	title = TextField('Title', [
 		validators.Required()
-	])
-
+	])	
+	tags = TextField('tags')	
 	photo_link = html5.URLField('link')
-
 	photo_file = FileField('file')
 
 class NewQuoteBlogForm(Form):
 	title = TextField('Title', [
 		validators.Required()
 	])
-
-	body = TextAreaField('Body')
-	source = TextField('Source')
-
+	tags = TextField('tags')
+	body = TextAreaField('body')
