@@ -1,8 +1,7 @@
-{{ form.csrf_token }}
-<form method="post" action="/blog/new">
-	{{ form.title }}
-	{{ form.photo_link }}
-	{{ form.photo_file }}
-	{{ form.hidden_tag() }}
-	<input type="submit" value="submit">
-</form>
+{% extends "main-new.html" %}
+{% block form %}
+
+{{ form.photo_link(placeholder="Link to photo") }}
+{{ form.photo_file }}
+
+{% endblock %}
