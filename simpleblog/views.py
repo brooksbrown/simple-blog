@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request
 from database import db
 
 from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
-from models import BlogEntry, BlogEntryText
+from models import BlogEntry
 
 app = Blueprint('simpleblog',
 				__name__, 
