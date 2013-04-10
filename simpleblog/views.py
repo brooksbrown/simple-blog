@@ -3,7 +3,7 @@ import random, string
 from flask import Blueprint, render_template
 from database import db
 
-from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm
+from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
 
 app = Blueprint('simpleblog',
 				__name__, 
@@ -28,17 +28,17 @@ def new_quote_blog():
 
 @app.route('/video/new')
 def new_video_blog():
-	form = NewQuoteVideoForm()
-	return render_template('simpleblog/quote-new.html', form=form)
+	form = NewVideoBlogForm()
+	return render_template('simpleblog/video-new.html', form=form)
 
 @app.route('/audio/new')
 def new_audio_blog():
-	form = NewQuoteAudioForm()
-	return render_template('simpleblog/quote-new.html', form=form)
+	form = NewAudioBlogForm()
+	return render_template('simpleblog/audio-new.html', form=form)
 
 @app.route('/link/new')
 def new_link_blog():
-	form = NewQuoteLinkForm()
-	return render_template('simpleblog/quote-new.html', form=form)
+	form = NewLinkBlogForm()
+	return render_template('simpleblog/link-new.html', form=form)
 
 
