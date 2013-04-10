@@ -17,9 +17,10 @@ class BlogTag(db.Model):
 
 class BlogEntry(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	
 	title = db.Column(db.String(80))
 	tags = db.relationship('BlogTag', secondary=blog_tags,
-			backref=db.backref('BlogEntries', lazy=dynamic))
+			backref=db.backref('text_blog_entries', lazy='dynamic'))
 
 	created = db.Column(db.DateTime)
 	updated = db.Column(db.DateTime)
@@ -28,31 +29,28 @@ class BlogEntry(db.Model):
 		return self.title 
 
 class BlogEntryText(db.Model):
-	blogentry_id = db.Column(db.Integer, db.ForeignKey('BlogEntry.id'))
-	blogentry = db.relationship('BlogEntry',
-			backref=db.backref('blogentrytext', lazy='dynamic'))
-
+	id = db.Column(db.Integer, primary_key=True)
+	blog_entry_id = db.Column(db.Integer, db.ForeignKey('blog_entry.id'))
+	
 	body = db.Column(db.Text)
 
+
 class BlogEntryPhoto(db.Model):
-	blogentry_id = db.Column(db.Integer, db.ForeignKey('BlogEntry.id'))
-	blogentry = db.relationship('BlogEntry',
-			backref=db.backref('blogentrytext', lazy='dynamic'))
+	id = db.Column(db.Integer, primary_key=True)
+	blog_entry_id = db.Column(db.Integer, db.ForeignKey('blog_entry.id'))
 	
 	photo_link = db.Column(db.String(180))
 	photo_file = db.Column(db.String(120))
 
 class BlogEntryQuote(db.Model):
-	blogentry_id = db.Column(db.Integer, db.ForeignKey('BlogEntry.id'))
-	blogentry = db.relationship('BlogEntry',
-			backref=db.backref('blogentrytext', lazy='dynamic'))
-
+	id = db.Column(db.Integer, primary_key=True)
+	blog_entry_id = db.Column(db.Integer, db.ForeignKey('blog_entry.id'))
+	
 	quote = db.Column(db.Text)
 	source = db.Column(db.String(120))
 
 class BlogEntryLink(db.Model):
-	blogentry_id = db.Column(db.Integer, db.ForeignKey('BlogEntry.id'))
-	blogentry = db.relationship('BlogEntry',
-			backref=db.backref('blogentrytext', lazy='dynamic'))
+	id = db.Column(db.Integer, primary_key=True)
+	blog_entry_id = db.Column(db.Integer, db.ForeignKey('blog_entry.id'))
 
 	link = db.Column(db.String(180))
