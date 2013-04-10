@@ -8,20 +8,13 @@ class NewTextBlogForm(Form):
 	body 	= TextAreaField('Body')
 
 class NewPhotoBlogForm(Form):
-	title 		= TextField('Title', [
-		validators.Required()
-	])	
-	tags 		= TextField('tags')	
-	photo_link  = html5.URLField('link')
-	photo_file 	= FileField('file')
-
-class NewQuoteBlogForm(Form):
 	title 	= TextField('Title', [
 		validators.Required()
-	])
-	tags 	= TextField('tags')
-	body 	= TextAreaField('body')
-	source 	= TextField('source')
+	])	
+	tags 	= TextField('tags')	
+	link  	= html5.URLField('link')
+	file 	= FileField('file')
+	body 	= TextAreaField('Body')
 
 class NewVideoBlogForm(Form):
 	title 	= TextField('Title', [
@@ -39,6 +32,14 @@ class NewAudioBlogForm(Form):
 	link 	= TextField('link')
 	body 	= TextAreaField('body')
 
+class NewQuoteBlogForm(Form):
+	title 	= TextField('Title', [
+		validators.Required()
+	])
+	tags 	= TextField('tags')
+	source 	= TextField('source')
+	body 	= TextAreaField('body')
+	
 class NewLinkBlogForm(Form):
 	title 	= TextField('Title', [
 		validators.Required()
