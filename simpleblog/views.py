@@ -1,10 +1,10 @@
 import random, string
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 from database import db
 
 from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
-from models import BlogEntry, BlogEntryText
+from models import BlogEntry, BlogTag
 
 app = Blueprint('simpleblog',
 				__name__, 
@@ -12,7 +12,7 @@ app = Blueprint('simpleblog',
 				url_prefix='/blog')
 
 
-@app.route('/text/new')
+@app.route('/text/new', methods=['GET', 'POST'])
 def new_text_blog():
 	form = NewTextBlogForm()
 
@@ -20,17 +20,22 @@ def new_text_blog():
 
 		new_blog = BlogEntry()
 		new_blog.title = form.title.data
-	
+
+		tags = form.tags.data.split(',')
+		tag_objects = []
+		for tag in tags:
+			storedTag = BlogTag.query.filter_by(title=tag).first()
+			if storedTag == None:
+				storedTag = BlogTag()
+				storedTag.title = tag
+				db.session.add(storedTag)
+				db.session.commit()
+			tag_objects.append(storedTag)
+		new_blog.tags = tag_objects
+		new_blog.body = form.body.data	
 		db.session.add(new_blog)
 		db.session.commit()
-
-		new_blog_data = BlogEntryText()
-		new_blog_data.blog_entry_id = new_blog.id
-		new_blog_data.body = form.body.data
-
-		db.session.add(new_blog_data)
-		db.session.commit()
-
+		return redirect("/")
 	return render_template('simpleblog/text-new.html', form=form)	
 
 @app.route('/photo/new')

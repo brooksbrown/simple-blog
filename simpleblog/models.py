@@ -7,7 +7,7 @@ blog_tags = db.Table('blog_tags',
 
 class BlogTag(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(80))
+	title = db.Column(db.String(80), unique=True)
 
 	created = db.Column(db.DateTime)
 	updated = db.Column(db.DateTime)
