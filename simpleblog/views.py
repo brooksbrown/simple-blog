@@ -48,7 +48,12 @@ def new_link_blog():
 	return render_template('simpleblog/link-new.html', form=form)
 
 
-
+@app.route('/list')
+def blog_list():
+	blogs = []
+	for blog in BlogEntry.query.all():
+		blogs.append(render_template("simpleblog/blog-list-item.html", blog=blog))
+	return render_template('simpleblog/blog-list.html', blogs=blogs)
 
 # tags should be a comma delimited string
 def create_blog(title, tags, body):

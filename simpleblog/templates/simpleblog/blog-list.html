@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% for blog in blogs: %}
+	<ul>
+		<li>{{ blog|safe }}</li>
+	</ul>
+{% endfor %}
+
+{% endblock %}
