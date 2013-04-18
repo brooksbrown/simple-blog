@@ -70,6 +70,7 @@ textarea#body, textarea#body::-webkit-input-placeholder {
 	font-size: 18px;
 	font-weight: 300;
 	height: 600px;
+	line-height: 28px;
 }
 
 input#link, input#link::-webkit-input-placeholder { 
@@ -82,25 +83,44 @@ input#link, input#link::-webkit-input-placeholder {
 	color: #333;
 	font-family: 'open sans';
 	font-weight: 300;
+	color: #a3a3a3;
 }
 
 .btn { 
-border: none;
-background: #34495e;
-color: white;
-font-size: 16.5px;
-padding: 10px;
-text-decoration: none;
-text-shadow: none;
-width: 15%;
--webkit-box-shadow: none;
--moz-box-shadow: none;
-box-shadow: none;
--webkit-transition: 0.25s;
--moz-transition: 0.25s;
--o-transition: 0.25s;
-transition: 0.25s;
--webkit-backface-visibility: hidden;
+	border: none;
+	background: #333;
+	color: white;
+	cursor: pointer;
+	font-size: 25px;
+	margin: 20px 0;
+	padding: 10px;
+	text-decoration: none;
+	text-shadow: none;
+	width: 48%;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-transition: 0.25s;
+	-moz-transition: 0.25s;
+	-o-transition: 0.25s;
+	transition: 0.25s;
+	-webkit-backface-visibility: hidden;
+	opacity: .8;
+}
+
+.btn:hover {
+	-webkit-transform: scale(1.05);	
+	opacity: 1;
+}
+
+.draft { 
+	background-color: #4B65AF;
+	float: left;
+}
+
+.post {
+	background-color: #C03436;
+	float: right;
 }
 
 
