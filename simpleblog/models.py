@@ -23,9 +23,11 @@ class BlogEntry(db.Model):
 			backref=db.backref('blog_entries', lazy='dynamic'))
 
 	body = db.Column(db.Text)
-
+	
 	created = db.Column(db.DateTime)
 	updated = db.Column(db.DateTime)
+
+	published = db.Column(db.Boolean)
 
 	def __repr__(self):
 		return self.title 
