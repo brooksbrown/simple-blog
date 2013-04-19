@@ -12,7 +12,7 @@
 	
 	{{ form.body(placeholder="Get to typin'") }}
 	{{ form.hidden_tag() }}
-	<input type="submit" value="Save as draft" class="btn draft">
-	<input type="submit" value="Post to blog" class="btn post">
+	{{ form.draft_submit(class="btn draft") }}
+	{{ form.post_submit(class="btn post") }}
 </form>
 {% endblock %}

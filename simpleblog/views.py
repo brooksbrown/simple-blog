@@ -20,8 +20,11 @@ def new_text_blog():
 	form = NewTextBlogForm()
 
 	if request.method == 'POST' and form.validate():
+		print form.__dict__.keys()
+		print form.draft_submit.__dict__.keys()
+		print form.draft_submit.data
 
-		new_blog = create_blog(form.title.data, form.tags.data, form.body.data)
+		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		return redirect("/")
 	return render_template('simpleblog/text-new.html', form=form)	
 
@@ -77,7 +80,7 @@ def blog_list():
 	return render_template('simpleblog/blog-list.html', blogs=blogs)
 
 # tags should be a comma delimited string
-def create_blog(title, tags, body):
+def create_blog(title, tags, body, published_flag):
 	new_blog = BlogEntry()
 	new_blog.title = title
 
@@ -94,6 +97,7 @@ def create_blog(title, tags, body):
 	new_blog.tags = tag_objects
 	new_blog.body = body
 	new_blog.created = new_blog.updated = datetime.datetime.now()
+	new_blog.published = published_flag
 	db.session.add(new_blog)
 	db.session.commit()
 	return new_blog

@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, TextField, TextAreaField, validators, html5, FileField
+from flask.ext.wtf import Form, TextField, TextAreaField, validators, html5, FileField, SubmitField
 
 class NewTextBlogForm(Form):
 	title 	= TextField('Title', [
@@ -6,6 +6,8 @@ class NewTextBlogForm(Form):
 	])
 	tags 	= TextField('tags')
 	body 	= TextAreaField('Body')
+	draft_submit = SubmitField('Save as draft', id="draft-submit")
+	post_submit = SubmitField('Post to blog', id="post-submit")
 
 class NewPhotoBlogForm(Form):
 	title 	= TextField('Title', [
