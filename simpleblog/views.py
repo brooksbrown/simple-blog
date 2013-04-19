@@ -1,16 +1,19 @@
-import random, string, datetime
+import random, string, datetime, os
 
 from flask import Blueprint, render_template, request, redirect
+from werkzeug import secure_filename
+
 from database import db
 
 from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
-from models import BlogEntry, BlogTag
+from models import BlogEntry, BlogTag, BlogEntryPhoto
 
 app = Blueprint('simpleblog',
 				__name__, 
 				template_folder='templates', 
 				url_prefix='/blog')
 
+UPLOAD_PATH = "/vagrant/uploads/"
 
 @app.route('/text/new', methods=['GET', 'POST'])
 def new_text_blog():
@@ -22,9 +25,26 @@ def new_text_blog():
 		return redirect("/")
 	return render_template('simpleblog/text-new.html', form=form)	
 
-@app.route('/photo/new')
+@app.route('/photo/new', methods=['GET', 'POST'])
 def new_photo_blog():
 	form = NewPhotoBlogForm()
+	form.enctype = 'enctype=multipart/form-data'
+
+	if request.method == 'POST' and form.validate():
+		new_blog = create_blog(form.title.data, form.tags.data, form.body.data)
+		new_blog_data = BlogEntryPhoto()
+		new_blog_data.blog_entry_id = new_blog.id
+		
+		photo_file = request.files['file']
+		if photo_file:
+			filename = secure_filename(photo_file.filename)
+			photo_file.save(os.path.join(UPLOAD_PATH, filename))
+			new_blog_data.photo_file = filename
+		new_blog_data.photo_link = form.link.data
+		db.session.add(new_blog_data)
+		db.session.commit()
+		return redirect('/')
+
 	return render_template('simpleblog/photo-new.html', form=form)
 
 @app.route('/quote/new')
@@ -52,6 +72,7 @@ def new_link_blog():
 def blog_list():
 	blogs = []
 	for blog in BlogEntry.query.all():
+		blog.photos = BlogEntryPhoto.query.filter_by(blog_entry_id=blog.id).all()
 		blogs.append(render_template("simpleblog/blog-list-item.html", blog=blog))
 	return render_template('simpleblog/blog-list.html', blogs=blogs)
 
@@ -75,3 +96,8 @@ def create_blog(title, tags, body):
 	new_blog.created = new_blog.updated = datetime.datetime.now()
 	db.session.add(new_blog)
 	db.session.commit()
+	return new_blog
+
+def file_ext_check(filename, allowed_extensions):
+	return '.' in filename and filename.rsplit('.',1)[1] in allowed_extensions
+

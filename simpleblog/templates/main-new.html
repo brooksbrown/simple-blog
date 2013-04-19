@@ -2,7 +2,7 @@
 {% block content  %}
 
 {{ form.csrf_token }}
-<form method="post" action="" class="dropzone">
+<form method="post" action="" class="dropzone" enctype=multipart/form-data>
 	{{ form.title(placeholder="Type your title")}}
 	{{ form.tags() }}
 
