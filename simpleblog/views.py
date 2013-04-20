@@ -7,23 +7,18 @@ from database import db
 
 from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
 from models import BlogEntry, BlogTag, BlogEntryPhoto
+from config import UPLOAD_PATH 
 
 app = Blueprint('simpleblog',
 				__name__, 
 				template_folder='templates', 
 				url_prefix='/blog')
 
-UPLOAD_PATH = "/vagrant/uploads/"
-
 @app.route('/text/new', methods=['GET', 'POST'])
 def new_text_blog():
 	form = NewTextBlogForm()
 
 	if request.method == 'POST' and form.validate():
-		print form.__dict__.keys()
-		print form.draft_submit.__dict__.keys()
-		print form.draft_submit.data
-
 		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		return redirect("/")
 	return render_template('simpleblog/text-new.html', form=form)	
