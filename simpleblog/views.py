@@ -1,6 +1,6 @@
 import random, string, datetime, os
 
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, send_from_directory
 from werkzeug import secure_filename
 
 from database import db
@@ -13,6 +13,10 @@ app = Blueprint('simpleblog',
 				__name__, 
 				template_folder='templates', 
 				url_prefix='/blog')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+	    return send_from_directory(UPLOAD_PATH, filename)
 
 @app.route('/text/new', methods=['GET', 'POST'])
 def new_text_blog():
@@ -39,6 +43,7 @@ def new_photo_blog():
 			photo_file.save(os.path.join(UPLOAD_PATH, filename))
 			new_blog_data.photo_file = filename
 		new_blog_data.photo_link = form.link.data
+		new_blog.blog_type = 'photo'
 		db.session.add(new_blog_data)
 		db.session.commit()
 		return redirect('/')
@@ -55,6 +60,7 @@ def new_quote_blog():
 		new_blog_data.blog_entry_id = new_blog.id
 		new_blog_data.quote = form.quote.data
 		new_blog_data.source = form.source.data
+		new_blog.blog_type = 'quote'
 		db.session.add(new_blog_data)
 		db.session.commit()
 		return redirect('/')
@@ -81,8 +87,16 @@ def new_link_blog():
 def blog_list():
 	blogs = []
 	for blog in BlogEntry.query.all():
-		blog.photos = BlogEntryPhoto.query.filter_by(blog_entry_id=blog.id).all()
-		blogs.append(render_template("simpleblog/blog-list-item.html", blog=blog))
+		if blog.blog_type == 'text':
+			blogs.append(render_template('simpleblog/text-view-listing.html', blog=blog))
+		elif blog.blog_type == 'photo':
+			blog_photo = BlogEntryPhoto.query.filter_by(blog_entry_id=blog.id).first()
+			if blog_photo.photo_link is not None:
+				blog.photo = blog_photo.photo_link
+			if blog_photo.photo_file is not None:
+				blog.photo = '/blog/uploads/' + blog_photo.photo_file
+			blogs.append(render_template('simpleblog/photo-view-listing.html', blog=blog))
+
 	return render_template('simpleblog/blog-list.html', blogs=blogs)
 
 # tags should be a comma delimited string
