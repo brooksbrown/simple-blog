@@ -21,6 +21,8 @@ class BlogEntry(db.Model):
 	title = db.Column(db.String(80))
 	tags = db.relationship('BlogTag', secondary=blog_tags,
 			backref=db.backref('blog_entries', lazy='dynamic'))
+	
+	blog_type = db.Column(db.String(10), default='text')
 
 	body = db.Column(db.Text)
 	
