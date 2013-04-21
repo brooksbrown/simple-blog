@@ -29,7 +29,7 @@ def new_photo_blog():
 	form.enctype = 'enctype=multipart/form-data'
 
 	if request.method == 'POST' and form.validate():
-		new_blog = create_blog(form.title.data, form.tags.data, form.body.data)
+		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		new_blog_data = BlogEntryPhoto()
 		new_blog_data.blog_entry_id = new_blog.id
 		
@@ -48,6 +48,17 @@ def new_photo_blog():
 @app.route('/quote/new')
 def new_quote_blog():
 	form = NewQuoteBlogForm()
+
+	if request.method == 'POST' and form.validate():
+		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
+		new_blog_data = BlogEntryQuote()
+		new_blog_data.blog_entry_id = new_blog.id
+		new_blog_data.quote = form.quote.data
+		new_blog_data.source = form.source.data
+		db.session.add(new_blog_data)
+		db.session.commit()
+		return redirect('/')
+
 	return render_template('simpleblog/quote-new.html', form=form)
 
 @app.route('/video/new')

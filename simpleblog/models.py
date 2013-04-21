@@ -43,7 +43,6 @@ class BlogEntryQuote(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	blog_entry_id = db.Column(db.Integer, db.ForeignKey('blog_entry.id'))
 	
-	quote = db.Column(db.Text)
 	source = db.Column(db.String(120))
 
 class BlogEntryLink(db.Model):
