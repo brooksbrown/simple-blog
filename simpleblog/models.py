@@ -21,16 +21,15 @@ class BlogEntry(db.Model):
 	title = db.Column(db.String(80))
 	tags = db.relationship('BlogTag', secondary=blog_tags,
 			backref=db.backref('blog_entries', lazy='dynamic'))
-	
-	blog_type = db.Column(db.String(10), default='text')
 
 	body = db.Column(db.Text)
 	
 	created = db.Column(db.DateTime)
 	updated = db.Column(db.DateTime)
 
-	published = db.Column(db.Boolean)
-
+	published = db.Column(db.Boolean, default=False)
+	
+	blog_type = db.Column(db.String(10))
 	def __repr__(self):
 		return self.title 
 
