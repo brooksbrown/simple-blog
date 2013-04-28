@@ -8,7 +8,8 @@ from database import db
 from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
 from models import BlogEntry, BlogTag, BlogEntryPhoto
 from config import UPLOAD_PATH 
-from utilities import create_blog_tag, create_blog  
+from utilities import create_blog_tag, blog_create, blog_photo_create, blog_quote_create
+
 app = Blueprint('simpleblog',
 				__name__, 
 				template_folder='templates', 
@@ -23,7 +24,7 @@ def new_text_blog():
 	form = NewTextBlogForm()
 
 	if request.method == 'POST' and form.validate():
-		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
+		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		new_blog.blog_type = 'text'
 		db.session.commit()
 		return redirect("/")
@@ -51,6 +52,7 @@ def edit_blog(blog_id):
 			db.session.commit()	
 			return redirect("/")
 		return render_template('simpleblog/text-new.html', form=form)	
+	return redirect('/')
 
 @app.route('/photo/new', methods=['GET', 'POST'])
 def new_photo_blog():
@@ -58,19 +60,8 @@ def new_photo_blog():
 	form.enctype = 'enctype=multipart/form-data'
 
 	if request.method == 'POST' and form.validate():
-		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
-		new_blog_data = BlogEntryPhoto()
-		new_blog_data.blog_entry_id = new_blog.id
-		
-		photo_file = request.files['file']
-		if photo_file:
-			filename = secure_filename(photo_file.filename)
-			photo_file.save(os.path.join(UPLOAD_PATH, filename))
-			new_blog_data.photo_file = filename
-		new_blog_data.photo_link = form.link.data
-		new_blog.blog_type = 'photo'
-		db.session.add(new_blog_data)
-		db.session.commit()
+		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
+		new_blog_photo = blog_photo_create(new_blog, form.link.data, request.files['file'])
 		return redirect('/')
 
 	return render_template('simpleblog/photo-new.html', form=form)
@@ -80,14 +71,8 @@ def new_quote_blog():
 	form = NewQuoteBlogForm()
 
 	if request.method == 'POST' and form.validate():
-		new_blog = create_blog(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
-		new_blog_data = BlogEntryQuote()
-		new_blog_data.blog_entry_id = new_blog.id
-		new_blog_data.quote = form.quote.data
-		new_blog_data.source = form.source.data
-		new_blog.blog_type = 'quote'
-		db.session.add(new_blog_data)
-		db.session.commit()
+		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
+		new_blog_quote = blog_quote_create(new_blog, form.quote.data, form.source.data)
 		return redirect('/')
 
 	return render_template('simpleblog/quote-new.html', form=form)
@@ -113,6 +98,7 @@ def blog_list():
 	blogs = []
 	for blog in BlogEntry.query.all():
 		if blog.blog_type == 'text':
+			blog.edit_link = '<a href="/blog/' + str(blog.id) + '/edit">edit</a>'
 			blogs.append(render_template('simpleblog/text-view-listing.html', blog=blog))
 		elif blog.blog_type == 'photo':
 			blog_photo = BlogEntryPhoto.query.filter_by(blog_entry_id=blog.id).first()
