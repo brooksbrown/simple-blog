@@ -28,7 +28,7 @@ def new_text_blog():
 		new_blog.blog_type = 'text'
 		db.session.commit()
 		return redirect('/blog/list')
-	return render_template('simpleblog/text-new.html', form=form)	
+	return render_template('simpleblog/text-edit-form.html', form=form)	
 
 @app.route('/photo/new', methods=['GET', 'POST'])
 def new_photo_blog():
@@ -40,7 +40,7 @@ def new_photo_blog():
 		new_blog_photo = blog_photo_create(new_blog, form.link.data, request.files['file'])
 		return redirect('/blog/list')
 
-	return render_template('simpleblog/photo-new.html', form=form)
+	return render_template('simpleblog/photo-edit-form.html', form=form)
 
 @app.route('/quote/new')
 def new_quote_blog():
@@ -51,22 +51,22 @@ def new_quote_blog():
 		new_blog_quote = blog_quote_create(new_blog, form.quote.data, form.source.data)
 		return redirect('/blog/list')
 
-	return render_template('simpleblog/quote-new.html', form=form)
+	return render_template('simpleblog/quote-edit-form.html', form=form)
 
 @app.route('/video/new')
 def new_video_blog():
 	form = NewVideoBlogForm()
-	return render_template('simpleblog/video-new.html', form=form)
+	return render_template('simpleblog/video-edit-form.html', form=form)
 
 @app.route('/audio/new')
 def new_audio_blog():
 	form = NewAudioBlogForm()
-	return render_template('simpleblog/audio-new.html', form=form)
+	return render_template('simpleblog/audio-edit-form.html', form=form)
 
 @app.route('/link/new')
 def new_link_blog():
 	form = NewLinkBlogForm()
-	return render_template('simpleblog/link-new.html', form=form)
+	return render_template('simpleblog/link-edit-form.html', form=form)
 
 
 @app.route('/<blog_id>/edit', methods=['GET', 'POST'])
