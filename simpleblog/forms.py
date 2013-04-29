@@ -67,3 +67,7 @@ class NewLinkBlogForm(Form):
 	draft_submit = SubmitField('Save as draft', id="draft-submit")
 	post_submit = SubmitField('Post to blog', id="post-submit")
 
+
+class RemoveBlogForm(Form):
+	remove_submit = SubmitField('Remove')
+

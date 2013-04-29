@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content  %}
+
+{{ form.csrf_token }}
+<form method="post" action="" class="dropzone" enctype=multipart/form-data>
+	{{ form.remove_submit }}
+	{{ form.hidden_tag() }}
+</form>
+{% endblock %}

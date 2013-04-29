@@ -5,10 +5,10 @@ from werkzeug import secure_filename
 
 from database import db
 
-from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm
+from forms import NewTextBlogForm, NewPhotoBlogForm, NewQuoteBlogForm, NewVideoBlogForm, NewAudioBlogForm, NewLinkBlogForm, RemoveBlogForm
 from models import BlogEntry, BlogTag, BlogEntryPhoto
 from config import UPLOAD_PATH 
-from utilities import create_blog_tag, blog_create, blog_photo_create, blog_quote_create
+from utilities import create_blog_tag, blog_create, blog_photo_create, blog_quote_create, blog_remove
 
 app = Blueprint('simpleblog',
 				__name__, 
@@ -27,32 +27,8 @@ def new_text_blog():
 		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		new_blog.blog_type = 'text'
 		db.session.commit()
-		return redirect("/")
+		return redirect('/blog/list')
 	return render_template('simpleblog/text-new.html', form=form)	
-
-@app.route('/<blog_id>/edit', methods=['GET', 'POST'])
-def edit_blog(blog_id):
-	blog = BlogEntry.query.filter_by(id=blog_id).first()
-	if blog.blog_type == 'text':
-		form = NewTextBlogForm()
-		form.title.data = blog.title
-		for tag in blog.tags:
-			print "###############"
-			print tag.title
-		form.body.data = blog.body
-		
-		if request.method == 'POST' and form.validate():
-			blog.title = form.title.data
-			tags = form.tags.data.split(',')
-			tag_objects = []
-			for tag in tags: 
-				storedTag = BlogTag.query.filter_by(title=tag).first()
-				tag_objects.append(storedTag)
-			blog.tags = tag_objects
-			db.session.commit()	
-			return redirect("/")
-		return render_template('simpleblog/text-new.html', form=form)	
-	return redirect('/')
 
 @app.route('/photo/new', methods=['GET', 'POST'])
 def new_photo_blog():
@@ -62,7 +38,7 @@ def new_photo_blog():
 	if request.method == 'POST' and form.validate():
 		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		new_blog_photo = blog_photo_create(new_blog, form.link.data, request.files['file'])
-		return redirect('/')
+		return redirect('/blog/list')
 
 	return render_template('simpleblog/photo-new.html', form=form)
 
@@ -73,7 +49,7 @@ def new_quote_blog():
 	if request.method == 'POST' and form.validate():
 		new_blog = blog_create(form.title.data, form.tags.data, form.body.data, form.post_submit.data)
 		new_blog_quote = blog_quote_create(new_blog, form.quote.data, form.source.data)
-		return redirect('/')
+		return redirect('/blog/list')
 
 	return render_template('simpleblog/quote-new.html', form=form)
 
@@ -92,6 +68,40 @@ def new_link_blog():
 	form = NewLinkBlogForm()
 	return render_template('simpleblog/link-new.html', form=form)
 
+
+@app.route('/<blog_id>/edit', methods=['GET', 'POST'])
+def edit_blog(blog_id):
+	blog = BlogEntry.query.filter_by(id=blog_id).first()
+	if blog.blog_type == 'text':
+		form = NewTextBlogForm()
+		form.title.data = blog.title
+		tags = '' 
+		for tag in blog.tags:
+			 tags += tag.title + ','
+		form.tags.data = tags
+		form.body.data = blog.body
+		
+		if request.method == 'POST' and form.validate():
+			blog.title = form.title.data
+			tags = form.tags.data.split(',')
+			tag_objects = []
+			for tag in tags: 
+				storedTag = BlogTag.query.filter_by(title=tag).first()
+				tag_objects.append(storedTag)
+			blog.tags = tag_objects
+			db.session.commit()	
+			return redirect('/blog/list')
+		return render_template('simpleblog/text-new.html', form=form)	
+	return redirect('/')
+
+@app.route('/<blog_id>/remove', methods=['GET', 'POST'])
+def remove_blog(blog_id):
+	form = RemoveBlogForm()
+	if request.method == 'POST' and form.validate():
+		blog_remove(blog_id)
+		return redirect('/blog/list')
+
+	return render_template('simpleblog/blog-remove-form.html', form=form)
 
 @app.route('/list')
 def blog_list():

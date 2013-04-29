@@ -30,6 +30,7 @@ class BlogEntry(db.Model):
 	published = db.Column(db.Boolean, default=False)
 	
 	blog_type = db.Column(db.String(10))
+
 	def __repr__(self):
 		return self.title 
 
