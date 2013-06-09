@@ -15,8 +15,7 @@ At 1.0 this Blueprint will contain
 
 Requirements
 ------------------
-'''
-login_manager = LoginManager()
+'''login_manager = LoginManager()
 login_manager.setup_app(app)
 
 @login_manager.user_loader
