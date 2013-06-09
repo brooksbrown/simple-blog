@@ -1,0 +1,3 @@
+[submodule "users"]
+	path = users
+	url = git@github.com:brooksbrown/flask-users-blueprint.git
