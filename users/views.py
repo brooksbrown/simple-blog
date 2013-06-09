@@ -10,7 +10,7 @@ from flask.ext.login import LoginManager, current_user, login_required, login_us
 from werkzeug import generate_password_hash, check_password_hash
 
 from database import db
-app = Blueprint('users', __name__, template_folder='templates', url_prefix='/users')
+app = Blueprint('users', __name__, template_folder='templates/users', url_prefix='/users')
 
 
 # users_get_object
