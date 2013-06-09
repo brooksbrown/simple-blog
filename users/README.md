@@ -15,6 +15,7 @@ At 1.0 this Blueprint will contain
 
 Requirements
 ------------------
+    from flask.ext.login import LoginManager	
     login_manager = LoginManager()
     login_manager.setup_app(app)
     
