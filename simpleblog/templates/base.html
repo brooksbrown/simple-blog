@@ -21,22 +21,27 @@
 
         <header>
             <div class="container cf">
-                <h1>SimpleBlog</h1>
-                <a class="user">DaviBrosk</a>
+                <h1>BrooksBrown.info</h1>
+                <nav>   
+			    <ul>
+                    <li class="user">
+                        <span>New Post</span>
+                        <ul>
+                            <li><a href="/blog/list">list</a></li>
+                            <li><a href="/blog/text/new">text</a></li>
+                            <li><a href="/blog/photo/new">photo</a></li>
+                            <li><a href="/blog/quote/new">quote</a></li>
+                            <li><a href="/blog/link/new">link</a></li>
+                            <li><a href="/blog/audio/new">audio</a></li>
+                            <li><a href="/blog/video/new">video</a></li>
+                        </ul>
+                    </li>
+                </nav>
             </div>
         </header>
 
 		<div class="container">
-			<p>Dev Utility Nav - Im putting this here until it ends up elsewhere</p>
-			<ul>
-				<li><a href="/blog/list">blog list</a></li>
-				<li><a href="/blog/text/new">new text blog</a></li>
-				<li><a href="/blog/photo/new">new_photo blog</a></li>
-				<li><a href="/blog/quote/new">new quote blog</a></li>
-				<li><a href="/blog/link/new">new link blog</a></li>
-				<li><a href="/blog/audio/new">new audio blog</a></li>
-				<li><a href="/blog/video/new">new video blog</a></li>
-			</ul>
+            
     		{% block content %}
     		{% endblock %}
         </div>
