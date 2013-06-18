@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from flask.ext.assets import Environment
 
 
+from flask.ext.login import LoginManager
 
 
 def __import_blueprint(blueprint_str):
@@ -110,6 +111,16 @@ def configure_database(app):
 	db.app = app
 	db.init_app(app)
 
+	login_manager = LoginManager()
+	login_manager.setup_app(app) 
+	@login_manager.user_loader
+	def load_user(userid):
+		user = User.query.get(userid)
+		if user:
+			return FLUserWrapper(user)
+		else:
+			return None
+		pass
 
 def configure_context_processors(app):
 	"Modify templates context here"

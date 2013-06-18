@@ -10,12 +10,35 @@ from flask.ext.login import LoginManager, current_user, login_required, login_us
 from werkzeug import generate_password_hash, check_password_hash
 
 from database import db
-app = Blueprint('users', __name__, template_folder='templates', url_prefix='/users')
+app = Blueprint('users', __name__, template_folder='templates/users', url_prefix='/users')
+
+
+# users_get_object
+#
+# returns a user's object given the user id
+
+def users_get_object(user_id):
+	user = User.query.filter_by(id=user_id).first()
+	return user;
+
+
+
+# user_view
+#
+# returns a rendered user given the user id 
+#
+# to overwrite the markup used in this function,
+# copy the file users/templates/users/user.html
+# to [your template directory]/templates/users/user.html
 
 @app.route('/<int:user_id>')
 def user_view(user_id):
-    user = User.query.filter_by(id=user_id).first()
+	user = users_get_object(user_id)
     return render_template("user.html", user = user)
+
+
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

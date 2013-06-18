@@ -33,6 +33,7 @@ class Config(object):
     BLUEPRINTS = [
         #'blog.views.app' # or ('blog.views.app', {'url_prefix':'/blog'})
         'simpleblog.views.app',
+		'users.views.app',
     ]  # each as (blueprint_instance, url_preffix)
 
 
