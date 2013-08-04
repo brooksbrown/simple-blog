@@ -22,14 +22,23 @@ header h1 {
 	float: left;
 }  
 
-header a.user {
-	float: right;
+header nav ul { 
+    float: right;
+    margin: 0;
+}
+
+header nav ul li { 
+   position: relative; 
+   list-style-type: none;
+}
+
+header li.user {
 	margin: 0;
 	padding: 10px;
 	position: relative;
 }
 
-header a.user:after {
+header li.user:after {
 	width: 0; 
 	height: 0; 
 	border-left: 5px solid transparent;
@@ -41,6 +50,25 @@ header a.user:after {
 	right: -5px;
 }
 
+header nav ul li ul {
+    background-color: #333;
+    display: none;
+    padding: 15px 0 10px 10px;
+    position: absolute;
+    width: 150px;
+}
+
+header nav ul li ul li {
+    padding: 10px;
+}
+
+header nav ul li ul li a {
+    color: #FFF;
+}
+
+header nav ul li:hover ul {
+    display:block;
+}
 div.container {
 	margin: 0 auto;
 	width: 60%;
