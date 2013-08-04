@@ -34,7 +34,7 @@ def users_get_object(user_id):
 @app.route('/<int:user_id>')
 def user_view(user_id):
 	user = users_get_object(user_id)
-    return render_template("user.html", user = user)
+	return render_template("user.html", user=user)
 
 
 

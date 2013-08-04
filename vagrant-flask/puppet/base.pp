@@ -1,20 +1,18 @@
-$venv_path = '/home/vagrant/venv'
-
-
 Exec {
 	path=> ["/usr/bin", "/bin", "/usr/sbin", "/sbin", "/usr/local/bin", "/usr/local/sbin"]
 }
 
+
 class { 'python':
-    virtualenv => true,
+  version => 'system',
+  dev => true,
+  virtualenv => true,
 }
 
-python::virtualenv { $venv_path:
-	ensure => present,
-	requirements => '/vagrant/requirements.txt',
+python::virtualenv { '/home/vagrant/venv':
+  ensure => present,
+  version => 'system',
+  requirements => '/vagrant/requirements.txt',
+  systempkgs => true,
 }
 
-exec { 'cleanup':
-	command => 'rm /vagrant/requirements.txt.sha1',	
-	require => python::virtualenv[$venv_path],
-}
